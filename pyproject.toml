@@ -1,0 +1,66 @@
+[project]
+authors = [{name = "Mike Salvatore", email="mike.s.salvatore@gmail.com"}]
+classifiers=[
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3.12"
+]
+dependencies = ["build123d (>=0.9.1, <1.0)", "ocp-vscode"]
+description = "A phone caddy that hooks over a headboard."
+dynamic = ["readme"]
+license = "GPLv3"
+name = "phone-caddy"
+requires-python = ">=3.12, <3.14"
+version = "v0.1.0"
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"]}
+
+[project.urls]
+Repository = "https://github.com/mssalvatore/phone-caddy"
+
+[tool.black]
+line-length = 100
+
+[tool.cruft]
+skip = [
+    "phone-caddy/__init__.py",
+    "README.md",
+    "CHANGELOG.md",
+    "vulture_allowlist.py"
+]
+
+[tool.isort]
+known_first_party = "phone-caddy"
+line_length = 100
+skip_glob="**/__init__.py"
+### for compatibility with black
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+[tool.mypy]
+check_untyped_defs = true
+
+[tool.vulture]
+exclude=[]
+paths = ["phone_caddy", "vulture_allowlist.py"]
+
+[tool.poetry]
+include = ["CHANGELOG.md", "README.md"]
+
+[tool.poetry.group.dev.dependencies]
+black = "24.3.0"
+cruft = "*"
+dlint = "0.14.1"
+flake8 = "7.1.1"
+isort = "5.12.0"
+mypy = "1.11.1"
+pudb = "^2022.1.2"
+pynvim = "^0.4.3"
+vulture = "2.9.1"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

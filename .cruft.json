@@ -1,0 +1,32 @@
+{
+  "template": "https://github.com/mssalvatore/3d-model-cookiecutter",
+  "commit": "63bc1a077ae719d4a7412b7bf6830175b1bc7890",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "__project_type": "generic",
+      "project_name": "phone-caddy",
+      "__project_slug": "phone_caddy",
+      "full_name": "Mike Salvatore",
+      "email": "mike.s.salvatore@gmail.com",
+      "url": "https://github.com/mssalvatore/phone-caddy",
+      "__year": "2025",
+      "license": "GPLv3",
+      "versioning_scheme": "CalVer",
+      "project_short_description": "A phone caddy that hooks over a headboard.",
+      "python_major_version": "3",
+      "python_minor_version": "12",
+      "hook_shellcheck": false,
+      "exclude_these_file_in_flake8": "vulture_allowlist.py",
+      "_black_version": "24.3.0",
+      "_dlint_version": "0.14.1",
+      "_flake8_version": "7.1.1",
+      "_isort_version": "5.12.0",
+      "_mypy_version": "1.11.1",
+      "_vulture_version": "2.9.1",
+      "_template": "https://github.com/mssalvatore/3d-model-cookiecutter",
+      "_commit": "63bc1a077ae719d4a7412b7bf6830175b1bc7890"
+    }
+  },
+  "directory": null
+}
