@@ -17,14 +17,14 @@ from ocp_vscode import (  # noqa: F401
 set_port(3939)
 
 PHONE_X: Final[float] = 75
-PHONE_Y: Final[float] = 8
+PHONE_Y: Final[float] = 9.75
 PHONE_Z: Final[float] = 115
 
-HEADBOARD_THICKNESS: Final[float] = 30
 
 HOOK_Z: Final[float] = 30
 HOOK_THICKNESS: Final[float] = 2.5
 
+HEADBOARD_THICKNESS: Final[float] = 40.75
 WALL_THICKNESS: Final[float] = 2
 OPPOSING_WALLS: Final[float] = 2 * WALL_THICKNESS
 FILLET: Final[float] = 2
