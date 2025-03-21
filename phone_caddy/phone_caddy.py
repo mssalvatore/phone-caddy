@@ -21,6 +21,7 @@ PHONE_X: Final[float] = 75
 PHONE_Y: Final[float] = 9.75
 PHONE_Z: Final[float] = 70
 
+PORT_CUTOUT_X: Final[float] = PHONE_X - 24
 
 HOOK_Z: Final[float] = 30
 HOOK_THICKNESS: Final[float] = 2.5
@@ -31,7 +32,7 @@ OPPOSING_WALLS: Final[float] = 2 * WALL_THICKNESS
 FILLET: Final[float] = 2
 
 
-def phone_caddy():
+def phone_caddy() -> Part:
     _hook = hook()
     _phone_caddy = Part() + _hook
 
@@ -41,7 +42,7 @@ def phone_caddy():
     return _phone_caddy + body(plane, (Align.CENTER, Align.MIN))
 
 
-def hook():
+def hook() -> Part:
     hook_fillet = 1.25
 
     l1 = Line((0, HOOK_Z + HOOK_THICKNESS), (0, 0))
@@ -72,7 +73,7 @@ def hook():
     return hook_3d
 
 
-def body(plane: Plane, align: tuple[Align, Align]):
+def body(plane: Plane, align: tuple[Align, Align]) -> Part:
     plane_y_axis = Axis(plane.origin, plane.y_dir)
 
     body_2d = plane * Rectangle(PHONE_X + OPPOSING_WALLS, PHONE_Z + WALL_THICKNESS, align=align)
@@ -85,21 +86,18 @@ def body(plane: Plane, align: tuple[Align, Align]):
     )
 
     body_3d -= phone_cutout(body_3d.faces().sort_by(Axis.Z).first)
-    body_3d -= port_cutout(body_3d.faces().sort_by(Axis.Z)[-1])
+
+    snapshot = body_3d.edges()
+    body_3d -= screen_cutout(body_3d.faces().sort_by(Axis.Y).first)
+    last_edges = body_3d.edges() - snapshot
+
+    fe = last_edges.filter_by(Axis.Z)
+    body_3d = fillet(fe, 0.99)
 
     return body_3d
 
 
-def port_cutout(face: Face):
-    plane = Plane(origin=face.center())
-
-    return extrude(
-        plane * RectangleRounded(PHONE_X - 24, PHONE_Y, radius=1.5),
-        amount=-2 * WALL_THICKNESS,
-    )
-
-
-def phone_cutout(face: Face):
+def phone_cutout(face: Face) -> Part:
     plane = Plane(origin=face.center())
 
     plane_x_axis = Axis(plane.origin, plane.x_dir)
@@ -119,6 +117,15 @@ def phone_cutout(face: Face):
     )
 
     return phone_cutout_3d
+
+
+def screen_cutout(face: Face) -> Part:
+    plane = Plane(origin=face.center(), x_dir=Axis.X.direction, z_dir=face.normal_at())
+
+    screen_cutout_2d = plane * Rectangle(PORT_CUTOUT_X, PHONE_Z + 2 * WALL_THICKNESS)
+    screen_cutout_3d = extrude(screen_cutout_2d, amount=-(WALL_THICKNESS + PHONE_Y))
+
+    return screen_cutout_3d
 
 
 def export_model_to_stl(model: Part):
