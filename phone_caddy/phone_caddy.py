@@ -18,7 +18,7 @@ set_port(3939)
 
 PHONE_X: Final[float] = 75
 PHONE_Y: Final[float] = 9.75
-PHONE_Z: Final[float] = 115
+PHONE_Z: Final[float] = 85
 
 
 HOOK_Z: Final[float] = 30
