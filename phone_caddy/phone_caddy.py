@@ -1,5 +1,6 @@
 import argparse
 from copy import deepcopy
+from itertools import chain
 from pathlib import Path
 from typing import Final
 
@@ -59,7 +60,16 @@ def hook():
     hook_2d = make_face([l1, l2, l3, l4, l5, l6, l7, l8])
     hook_2d = fillet(hook_2d.vertices()[5], hook_fillet)
 
-    return Plane.YZ * extrude(hook_2d, PHONE_X)
+    hook_3d = Plane.YZ * extrude(hook_2d, PHONE_X)
+    hook_fillet_edges = ShapeList(
+        chain(
+            hook_3d.edges().sort_by(Axis.Y)[-4:],
+            hook_3d.edges().filter_by(Axis.Y).sort_by(Axis.Z)[0:2],
+        )
+    )
+    hook_3d = fillet(hook_fillet_edges, hook_fillet)
+
+    return hook_3d
 
 
 def body(plane: Plane, align: tuple[Align, Align]):
